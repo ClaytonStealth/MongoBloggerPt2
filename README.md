@@ -89,8 +89,8 @@ const uuidList = [
         "7c5d70bb-2a00-4009-9bb8-1bb163fb501f",
     ]
 const getPosts = (searchObject, sortObject, limit, skip) => {
-    const posts = db.blogs.find(searchObject).sort(sortObject).limit(3).skip(1).toArray()
-     for (let i = 0; i < blogs.length; i++){    
+    const posts = db.blogs.find(searchObject).sort(sortObject).limit(limit).skip(skip).toArray()
+     for (let i = 0; i < posts.length; i++){    
         if (sortObject === undefined || limit === undefined || skip === undefined){
         continue;
         }
@@ -100,7 +100,7 @@ const getPosts = (searchObject, sortObject, limit, skip) => {
 
 const searchObject = {}
 const sortObject = {createdAt: 1}
-const limit = 10
+const limit = 3
 const skip = 0
 searchObject.createdAt = {
     $gt: new Date("2022/05/01")
@@ -134,13 +134,13 @@ const createPost = (newPost) => {
         author: newPost.author,
         categories: newPost.categories
         }
-    if (newPost.title === undefined) { return false}
-    if (newPost.text === undefined) {return false}
-    if (newPost.author === undefined) {return false}
+    if (postData.title === undefined) { return false}
+    if (postData.text === undefined) {return false}
+    if (postData.author === undefined) {return false}
     if (
-    newPost.category === undefined ||
-    Array.isArray(newPost.category) === false ||
-    newPost.category.length < 1
+    postData.category === undefined ||
+    Array.isArray(postData.category) === false ||
+    postData.category.length < 1
     ) {return false}
     db.blogs.insertOne(postData)
 }
@@ -153,7 +153,7 @@ const newPost = {
 }
 
 // Uncomment the following line when you're ready to run createPosts
-createPost(newPost)
+// createPost(newPost)
 
 /*
 Requirements:
