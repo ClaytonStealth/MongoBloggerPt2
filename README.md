@@ -184,9 +184,9 @@ Stretch Goal:
     - Use getPosts() to find the blog post you created before and get the UUID from the id field in that blog post 
         programmatically without needing to hardcode the postId variable. 
 */
-const deleteMany = (arr) => {
-    for (let i = 0; i < arr.length; i++){
-    db.blogs.deleteMany({id: arr[i]})
+const deleteMany = (uuids) => {
+    for (let i = 0; i < uuids.length; i++){
+    db.blogs.deleteMany({id: uuids[i]})
 }}
 deleteMany(uuidList)
 
