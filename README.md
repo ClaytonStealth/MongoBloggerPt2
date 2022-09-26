@@ -90,6 +90,11 @@ const uuidList = [
     ]
 const getPosts = (searchObject, sortObject, limit, skip) => {
     const posts = db.blogs.find(searchObject).sort(sortObject).limit(3).skip(1).toArray()
+     for (let i = 0; i < blogs.length; i++){    
+        if (sortObject === undefined || limit === undefined || skip === undefined){
+        continue;
+        }
+    }
     return posts
 }
 
@@ -129,6 +134,14 @@ const createPost = (newPost) => {
         author: newPost.author,
         categories: newPost.categories
         }
+    if (newPost.title === undefined) { return false}
+    if (newPost.text === undefined) {return false}
+    if (newPost.author === undefined) {return false}
+    if (
+    newPost.category === undefined ||
+    Array.isArray(newPost.category) === false ||
+    newPost.category.length < 1
+    ) {return false}
     db.blogs.insertOne(postData)
 }
 
@@ -140,7 +153,7 @@ const newPost = {
 }
 
 // Uncomment the following line when you're ready to run createPosts
-// createPost(newPost)
+createPost(newPost)
 
 /*
 Requirements:
@@ -188,7 +201,7 @@ const deleteMany = (uuids) => {
     for (let i = 0; i < uuids.length; i++){
     db.blogs.deleteMany({id: uuids[i]})
 }}
-deleteMany(uuidList)
+// deleteMany(uuidList)
 
 const deletePost = (id) => {
     db.blogs.deleteOne({
